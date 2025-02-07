@@ -12,11 +12,3 @@ __pycache__/
 venv/
 node_modules/
 
-# ⚠️ Exclure les fichiers Docker temporaires
-*.tar
-*.swp
-docker-compose.override.yml
-
-# ⚠️ Exclure les fichiers de config locaux
-.env.local
-config.yml
