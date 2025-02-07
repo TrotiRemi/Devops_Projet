@@ -1,0 +1,22 @@
+# ⚠️ Exclure les fichiers CSV (backup des données)
+*.csv
+
+# ⚠️ Exclure les fichiers de logs et de cache
+*.log
+__pycache__/
+*.pyc
+*.pyo
+
+# ⚠️ Exclure les dossiers spécifiques
+.env
+venv/
+node_modules/
+
+# ⚠️ Exclure les fichiers Docker temporaires
+*.tar
+*.swp
+docker-compose.override.yml
+
+# ⚠️ Exclure les fichiers de config locaux
+.env.local
+config.yml
