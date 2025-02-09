@@ -23,13 +23,13 @@
       
 - [Devops](#devops)
 
-  - [Developer Guide](#developer-guide)
+  - [Developer Guide Devops](#developer-guide-devops)
     
-     - [Structure du projet](#structure-du-projet)
-     - [Description des Fichiers](#description-des-fichiers)
-     - [Ouverture des instance AWS](#description-des-fichiers)
+     - [Structure Devops](#structure-devops)
+     - [Fichiers Devops](#fichiers-devops)
+     - [Ouverture des instance AWS](#ouverture-des-instance-aws)
    
-  - [Rapport d'analyse](#rapport-d'analyse)
+  - [Rapport d'analyse Devops](#rapport-d'analyse-devops)
 
 
 #
@@ -246,13 +246,13 @@ Le but de ce dashboard est de pouvoir trouver ses résultats sur la première pa
 
 
 #
-# DEVELOPER GUIDE
+# DEVELOPER GUIDE DEVOPS
 
-## Structure du projet
+## Structure Devops
 
-## Description des Fichiers
+## Fichiers Devops
 
 ## Ouverture des instance AWS
 
 #
-# Rapport d'analyse
+# Rapport d'analyse Devops
