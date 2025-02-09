@@ -1,25 +1,41 @@
 # Projet FFA - Dashboard Fédération Française Athlétisme
 
 ## Sommaire
+
+- [User Guide](#user-guide)
+
 - [Data](#data)
+  
   - [Developer Guide](#developer-guide)
+    
      - [Structure du projet](#structure-du-projet)
      - [Introduction](#introduction)
      - [Description des Fichiers](#description-des-fichiers)
+  
   - [Rapport d'analyse](#rapport-d'analyse)
+  
      - [Page d'accueil](#page-d'accueil)
      - [Page Coureur](#page-coureur)
      - [Page Course](#page-course)
      - [Page Map](#page-map)
      - [Page Histogramme](#page-histogramme)
      - [Exemple d'utilisation du dashboard](#exemple-d'utilisation-du-dashboard)
+      
 - [Devops](#devops)
+
+  - [Developer Guide](#developer-guide)
+    
+     - [Structure du projet](#structure-du-projet)
+     - [Description des Fichiers](#description-des-fichiers)
+     - [Ouverture des instance AWS](#description-des-fichiers)
+   
+  - [Rapport d'analyse](#rapport-d'analyse)
 
 
 #
 # USER GUIDE
 
-Avant de lire la suite du texte, assurer-vous d'avoir installer mongoDB, Docker et ElasticSearch. Pour déployer le dashboard après avoir récupérer le projet depuis un repertoire distant, il faut ouvrir le dossier dans une application permettant d'éxcuter du code python comme VS code par exemple. Ou alors ouvrir DockerDeckstop et se mettre sur le chemin du dossier dans le terminal. Une fois que vous avez réalisé l'un ou l'autre, il suffit de run la commande docker-compose up --build pour lancer le fichier docker-compose du dossier qui va lancer tout le projet. Il n'y a pas besoin de réaliser une quelconque manipulation auparavant car tout est programmé dans le fichier docker-compose, ce dernier run le docker-file du projet qui contient une commande pour installer les packages présent dans le fichier requirements.txt. Lors du premier build, vous devrez attendre un moment pour que le fichier s'execute,à la fin de l'éxécution de ce dernier, un serveur accessible, via une adresse IP qui sera fournit dans le terminal, va se lancer. Attention, il faut utiliser le lien : http://localhost:8060/ sur uen page web pour être redirigé vers le dashboard. Il est organisé avec un système de pages, lorsque l'utilisateur lance le dashboard, il arrive sur une page où il pourra choisir quel graphique il veut consulter grâce à une navbar. L'utilisateur pourra facilement naviguer entre les différents graphiques d'un simple appui. De plus, ce dernier rencontrera des listes déroulantes interactives pour changer le visuel de certains graphiques.
+Ce projet combine deux projet en un. C'est d'abord un projet de devops ou je créée un serveur sur AWS pour éberger un application web. C'est aussi un projet de data avec plus de 1 000 000 de données qui sont rangé dans ce même serveur. Plusieurs façon de lancer le projet. En interne, sur une machine local. Après avoir installé MongoDb, ElasticSearch et docker/docker-compose, on peut lancer la commande docker-compose up --build, pour ainsi lancer le projet. Ensuite il suffit d'ouvrir son navigateur sur localhost:8060 pour voir le projet. On peut aussi lancer en externe, en ouvrant mon instance AWS (details du fonctionnement après), et en lanceant depuis un terminal connecté à ce serveur, mon application. Elle est alors connécté à "IP_Serveur:8060" accésible depuis toute connexion internet sans restriction (ça ne marche pas sur le wifi de l'Esiee par exemple).
 
 #
 # DATA
@@ -229,3 +245,14 @@ Le but de ce dashboard est de pouvoir trouver ses résultats sur la première pa
 # Devops
 
 
+#
+# DEVELOPER GUIDE
+
+## Structure du projet
+
+## Description des Fichiers
+
+## Ouverture des instance AWS
+
+#
+# Rapport d'analyse
