@@ -6,7 +6,13 @@
      - [Structure du projet](#structure-du-projet)
      - [Introduction](#introduction)
      - [Description des Fichiers](#description-des-fichiers)
-     - [Rapport d'analyse](#rapport-d'analyse)
+  - [Rapport d'analyse](#rapport-d'analyse)
+     - [Page d'accueil](#page-d'accueil)
+     - [Page Coureur](#page-coureur)
+     - [Page Course](#page-course)
+     - [Page Map](#page-map)
+     - [Page Histogramme](#page-histogramme)
+     - [Exemple d'utilisation du dashboard](#exemple-d'utilisation-du-dashboard)
 - [Devops](#devops)
 
 
