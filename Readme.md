@@ -240,16 +240,16 @@ Cette page permet d'observer la distribution des résultats pour la course chois
 ## Exemple d'utilisation du dashboard
 
 Le but de ce dashboard est de pouvoir trouver ses résultats sur la première page en tant que coureur. Ensuite on peut rechercher la course en question pour l'étudier (nombre de coureur etc). Enfin, grâce à la page histogramme, on peut examiner la distribution des résultats pour se situer dans le niveau de la course. Ainsi chaque coureur peut effectuer une analyse approfondi de ses rsultats sur chaque course qu'il a effectué. 
+# DevOps
 
-#
-# Devops
+## **DEVELOPER GUIDE DEVOPS**
 
-# DEVELOPER GUIDE DEVOPS
-
-## Structure DevOps
+### **Structure DevOps**
 Ce projet suit une architecture DevOps permettant le déploiement automatisé d'une application web basée sur **Dash**, avec **MongoDB** et **Elasticsearch** comme bases de données. L'ensemble est orchestré via **Kubernetes** sur un cluster AWS EKS.
 
-## Fichiers DevOps
+---
+
+## **Fichiers DevOps**
 Le projet contient plusieurs fichiers clés pour l'automatisation du déploiement et la gestion de l'infrastructure :
 - **Dockerfile** : Conteneurisation de l'application Dash.
 - **docker-compose.yaml** : Configuration pour lancer les services en local.
@@ -259,12 +259,11 @@ Le projet contient plusieurs fichiers clés pour l'automatisation du déploiemen
 - **data/** : Contient les fichiers CSV de backup et d'importation.
 - **Images/** : Contient les images utiles pour la documentation.
 
-## Ouverture des instances AWS
+---
 
-Pour créer une instance AWS, j'ai d'abord créé un compte AWS et configuré un utilisateur dans la section **IAM Users**. Cet utilisateur dispose d'une clé SSH pour se connecter à l'instance.
-
-### Création et configuration de l'instance
-J'ai choisi une instance **m5.large**, capable de supporter la charge de l'application et les bases de données. Une fois l'instance créée, j'ai attribué une clé .pem et me suis connecté via la commande :
+## **Ouverture des instances AWS**
+### **Création et configuration de l'instance**
+J'ai choisi une instance **m5.large**, capable de supporter la charge de l'application et les bases de données. Une fois l'instance créée, j'ai attribué une clé `.pem` et me suis connecté via la commande :
 ```sh
 ssh -i Key_FFA.pem ec2-user@<IP_Serveur>
 ```
@@ -273,15 +272,34 @@ Ensuite, j'ai copié mon projet sur le serveur avec :
 scp -i Key_FFA.pem -r Devops_project ec2-user@<IP_Serveur>:/home/ec2-user/
 ```
 
-### Configuration du pare-feu et des règles d'accès
+### **Configuration du pare-feu et des règles d'accès**
 J'ai défini des **Security Groups** pour ouvrir les ports nécessaires :
 - **22** : SSH (accès distant)
 - **8060** : Accès à l'application Dash
 - **80** : HTTP (pour Kubernetes LoadBalancer)
 
+📌 *Configuration des règles de sécurité sur AWS :*
 ![](Images/image (8).png)
 
-## Lancement de GitHub et Configuration CI/CD
+---
+
+## **Gestion des droits d’accès**
+Les accès sont sécurisés via plusieurs niveaux :
+1. **IAM Roles & Policies** :
+   - Un utilisateur AWS avec **IAM** a été créé avec des accès restreints à **EC2**, **EKS** et **S3**.
+   - Seules les actions essentielles (création de pods, accès aux logs) sont permises.
+  
+2. **Security Groups** :
+   - Seuls certains **IPs autorisés** peuvent accéder à SSH et à l'application via HTTP/HTTPS.
+   - Le **port 8060** est exposé uniquement au monde extérieur pour l'application Dash.
+
+3. **Kubernetes RBAC** :
+   - L’accès aux pods et services est restreint via des **RoleBindings** sur Kubernetes.
+   - Seuls les utilisateurs avec les bons droits peuvent exécuter `kubectl get pods`.
+
+---
+
+## **Lancement de GitHub et Configuration CI/CD**
 Le projet est hébergé sur **GitHub**, et un **workflow CI/CD** a été mis en place pour :
 1. **Build de l'image Docker**
 2. **Push sur DockerHub**
@@ -303,14 +321,15 @@ Workflow dans `.github/workflows/deploy.yml` :
 ```
 📌 *Image du pipeline CI/CD en action*
 
+Ces deux images que l'ont peut voir dans le dossier action de github nous montre que le projet marche et nous explique les étapes (docker-compose, Elastic) qui le font tourner
 
 ![](Images/Reussite_CI_CD.png)
 
 ![](Images/Info_CI_CD.png)
 
-Ces deux images que l'ont peut voir dans le dossier action de github nous montre que le projet marche et nous explique les étapes (docker-compose, Elastic) qui le font tourner
+---
 
-## Installation des packages
+## **Installation des packages**
 Une fois sur le serveur AWS, j'ai installé les dépendances nécessaires :
 ```sh
 sudo yum update -y
@@ -325,6 +344,7 @@ chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 ```
 
+---
 ## Importation des données dans Elasticsearch
 Les données de performances en marathon ont été importées dans Elasticsearch depuis des fichiers CSV :
 ```sh
@@ -373,17 +393,64 @@ Sur le terminal on peut en tappant la commande *kubectl get podsds*, on obtient 
 
 Enfin, sur AWS, on peut analyser nos deux instances, via ce graph
 
+## **Configuration et explication des fichiers Kubernetes**
 
-## Accès à l'application
-Une fois le déploiement terminé, j'ai récupéré l'URL de l'application via :
+### **Dash App**
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dash-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dash
+  template:
+    metadata:
+      labels:
+        app: dash
+    spec:
+      containers:
+      - name: dash
+        image: locquetr123/dash-app:latest  
+        env:
+        - name: MONGO_URI
+          value: "mongodb://mongodb-service:27017/"
+        - name: ELASTICSEARCH_URL
+          value: "http://elasticsearch-service:9200"
+        ports:
+        - containerPort: 8060
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dash-service
+spec:
+  selector:
+    app: dash
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8060
+  type: LoadBalancer
+```
+
+
+---
+
+## **Accès à l'application**
 ```sh
 kubectl get services dash-service
 ```
-
-L'application est accessible à :
+Accès :
 ```
 http://<EXTERNAL-IP>:8060
 ```
+
+---
+
+
 
 ## Conclusion
 Ce projet m'a permis d'automatiser le déploiement d'une application de DataViz avec **Dash**, en utilisant un pipeline CI/CD sur AWS et Kubernetes. Il offre une approche complète de la mise en production et de la gestion de bases de données à grande échelle.
