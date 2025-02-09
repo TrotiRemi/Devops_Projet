@@ -1,10 +1,14 @@
 # Projet FFA - Dashboard Fédération Française Athlétisme
 
 ## Sommaire
-- [User Guide](#user-guide)
 - [Data](#data)
-- [Developer Guide](#developer-guide)
-  - [Structure du projet](#structure-du-projet)
+  - [Developer Guide](#developer-guide)
+     - [Structure du projet](#structure-du-projet)
+     - [Introduction](#introduction)
+     - [Description des Fichiers](#description-des-fichiers)
+     - [Rapport d'analyse](#rapport-d'analyse)
+- [Devops](#devops)
+
 
 #
 # USER GUIDE
@@ -215,6 +219,7 @@ Cette page permet d'observer la distribution des résultats pour la course chois
 
 Le but de ce dashboard est de pouvoir trouver ses résultats sur la première page en tant que coureur. Ensuite on peut rechercher la course en question pour l'étudier (nombre de coureur etc). Enfin, grâce à la page histogramme, on peut examiner la distribution des résultats pour se situer dans le niveau de la course. Ainsi chaque coureur peut effectuer une analyse approfondi de ses rsultats sur chaque course qu'il a effectué. 
 
-
+#
+# Devops
 
 
