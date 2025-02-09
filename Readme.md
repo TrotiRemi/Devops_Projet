@@ -303,6 +303,13 @@ Workflow dans `.github/workflows/deploy.yml` :
 ```
 📌 *Image du pipeline CI/CD en action*
 
+
+![](Images/Reussite_CI_CD.png)
+
+![](Images/Info_CI_CD.png)
+
+Ces deux images que l'ont peut voir dans le dossier action de github nous montre que le projet marche et nous explique les étapes (docker-compose, Elastic) qui le font tourner
+
 ## Installation des packages
 Une fois sur le serveur AWS, j'ai installé les dépendances nécessaires :
 ```sh
