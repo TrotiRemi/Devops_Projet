@@ -1,35 +1,36 @@
 # Projet FFA - Dashboard Fédération Française Athlétisme
 
-## Sommaire
+## Somaire
 
 - [User Guide](#user-guide)
 
 - [Data](#data)
-  
-  - [Developer Guide](#developer-guide)
-    
-     - [Structure du projet](#structure-du-projet)
-     - [Introduction](#introduction)
-     - [Description des Fichiers](#description-des-fichiers)
-  
-  - [Rapport d'analyse](#rapport-d'analyse)
-  
-     - [Page d'accueil](#page-d'accueil)
-     - [Page Coureur](#page-coureur)
-     - [Page Course](#page-course)
-     - [Page Map](#page-map)
-     - [Page Histogramme](#page-histogramme)
-     - [Exemple d'utilisation du dashboard](#exemple-d'utilisation-du-dashboard)
-      
-- [Devops](#devops)
+  - [Structure du projet](#structure-du-projet)
+  - [Introduction](#introduction)
+  - [Description des fichiers](#description-des-fichiers)
+  - [Rapport d'analyse](#rapport-danalyse)
+    - [Page d'accueil](#page-daccueil)
+    - [Page coureur](#page-coureur)
+    - [Page course](#page-course)
+    - [Page map](#page-map)
+    - [Page histogramme](#page-histogramme)
+    - [Exemple d'utilisation du dashboard](#exemple-dutilisation-du-dashboard)
 
-  - [Developer Guide Devops](#developer-guide-devops)
-    
-     - [Structure Devops](#structure-devops)
-     - [Fichiers Devops](#fichiers-devops)
-     - [Ouverture des instance AWS](#ouverture-des-instance-aws)
-   
-  - [Rapport d'analyse Devops](#rapport-d'analyse-devops)
+- [DevOps](#devops)
+  - [Structure DevOps](#structure-devops)
+  - [Fichiers DevOps](#fichiers-devops)
+  - [Ouverture des instances AWS](#ouverture-des-instances-aws)
+  - [Gestion des droits d’accès](#gestion-des-droits-dacces)
+  - [Lancement de GitHub et Configuration CI/CD](#lancement-de-github-et-configuration-cicd)
+  - [Installation des packages](#installation-des-packages)
+  - [Importation des données dans Elasticsearch](#importation-des-donnees-dans-elasticsearch)
+  - [Création du Cluster Kubernetes](#creation-du-cluster-kubernetes)
+  - [Configuration et explication des fichiers Kubernetes](#configuration-et-explication-des-fichiers-kubernetes)
+  - [Accès à l'application](#acces-a-lapplication)
+  - [Conclusion](#conclusion)
+
+---
+
 
 
 #
@@ -279,11 +280,11 @@ J'ai défini des **Security Groups** pour ouvrir les ports nécessaires :
 - **80** : HTTP (pour Kubernetes LoadBalancer)
 
 📌 *Configuration des règles de sécurité sur AWS :*
-![](Images/image (8).png)
+![](Images/Clé_Accés_User.png)
 
 ---
 
-## **Gestion des droits d’accès**
+## **Gestion des droits dacces**
 Les accès sont sécurisés via plusieurs niveaux :
 1. **IAM Roles & Policies** :
    - Un utilisateur AWS avec **IAM** a été créé avec des accès restreints à **EC2**, **EKS** et **S3**.
@@ -345,7 +346,7 @@ sudo mv kubectl /usr/local/bin/
 ```
 
 ---
-## Importation des données dans Elasticsearch
+## Importation des donnees dans Elasticsearch
 Les données de performances en marathon ont été importées dans Elasticsearch depuis des fichiers CSV :
 ```sh
 docker exec -i elasticsearch curl -X PUT "http://localhost:9200/athle_results" -H "Content-Type: application/json" -d' {
@@ -357,7 +358,7 @@ Puis, chargement des données :
 curl -X POST "http://localhost:9200/athle_results/_bulk" -H "Content-Type: application/json" --data-binary @data/athle_results.json
 ```
 
-## Création du Cluster Kubernetes
+## Creation du Cluster Kubernetes
 Le cluster Kubernetes a été déployé sur AWS EKS via la commande :
 ```sh
 eksctl create cluster --name devops-cluster --region us-east-1 --nodegroup-name standard-workers --node-type m5.large --nodes 2
@@ -439,7 +440,7 @@ spec:
 
 ---
 
-## **Accès à l'application**
+## **Acces a lapplication**
 ```sh
 kubectl get services dash-service
 ```
@@ -453,7 +454,8 @@ http://<EXTERNAL-IP>:8060
 
 
 ## Conclusion
-Ce projet m'a permis d'automatiser le déploiement d'une application de DataViz avec **Dash**, en utilisant un pipeline CI/CD sur AWS et Kubernetes. Il offre une approche complète de la mise en production et de la gestion de bases de données à grande échelle.
+Ce projet m'a permis d'automatiser le déploiement d'une application de DataViz avec **Dash**, en utilisant un pipeline CI/CD sur AWS et Kubernetes. J'ai pu ouvrir un serveur, et ainsi crée un premier projet réelement professionelle. J'espère à l'avenir compléter ce projet afin qu'il offre une approche complète de la mise en production et de la gestion de bases de données à grande échelle. Le sujet me passionne, et c'est la première fois que j'ai pu allié ma passion (la course à pied) et un projet de Devops.
+Pour plus d'information sur l'application en elle même, veuillez ouvrir la vidéo explicative
 
 ---
 
