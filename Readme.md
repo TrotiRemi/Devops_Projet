@@ -348,13 +348,23 @@ Ici on peut voir les deux IP de mes instances crées via Kubernetes
 
 ![](Images/Instance_Kubernetes.png)
 
+Ici on peut nos deux instances de type large pour subvenir à nos besoins
+
 ![](Images/Instance_Kubernetes_2.png)
+
+Sur le terminal on peut en tappant la commande *kubectl get nodes -o wide* nos deux nodes equivalentes à des conteneurs kubernetes
 
 ![](Images/Service_Kubernetes.png)
 
+Sur le terminal on peut en tappant la commande *get services*, on obtient les services (images) de notre réseau
+
 ![](Images/Etat_Instance_Kubernetes.png)
 
+Sur le terminal on peut en tappant la commande *kubectl get podsds*, on obtient toutes les images de notre docker-compose
+
 ![](Images/Etat_Deux_Instances_Kubernetes.png)
+
+Enfin, sur AWS, on peut analyser nos deux instances, via ce graph
 
 
 ## Accès à l'application
