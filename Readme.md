@@ -317,7 +317,6 @@ curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.0/2023-05-05/bin/linu
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 ```
-📌 *Image des packages installés*
 
 ## Importation des données dans Elasticsearch
 Les données de performances en marathon ont été importées dans Elasticsearch depuis des fichiers CSV :
@@ -330,7 +329,6 @@ Puis, chargement des données :
 ```sh
 curl -X POST "http://localhost:9200/athle_results/_bulk" -H "Content-Type: application/json" --data-binary @data/athle_results.json
 ```
-📌 *Image du chargement des données*
 
 ## Création du Cluster Kubernetes
 Le cluster Kubernetes a été déployé sur AWS EKS via la commande :
@@ -343,12 +341,27 @@ kubectl apply -f kubernetes/
 ```
 📌 *Image des services Kubernetes*
 
+![](Images/IP_Kubernetes_1.png)
+![](Images/IP_Kubernetes_2.png)
+
+Ici on peut voir les deux IP de mes instances crées via Kubernetes
+
+![](Images/Instance_Kubernetes.png)
+
+![](Images/Instance_Kubernetes_2.png)
+
+![](Images/Service_Kubernetes.png)
+
+![](Images/Etat_Instance_Kubernetes.png)
+
+![](Images/Etat_Deux_Instances_Kubernetes.png)
+
+
 ## Accès à l'application
 Une fois le déploiement terminé, j'ai récupéré l'URL de l'application via :
 ```sh
 kubectl get services dash-service
 ```
-📌 *Image de l'URL générée*
 
 L'application est accessible à :
 ```
@@ -359,16 +372,4 @@ http://<EXTERNAL-IP>:8060
 Ce projet m'a permis d'automatiser le déploiement d'une application de DataViz avec **Dash**, en utilisant un pipeline CI/CD sur AWS et Kubernetes. Il offre une approche complète de la mise en production et de la gestion de bases de données à grande échelle.
 
 ---
-📌 **Images** :
-- Image (1) : Architecture générale
-- Image (2) : Configuration AWS
-- Image (3) : Déploiement CI/CD
-- Image (4) : Configurations Kubernetes
-- Image (5) : Importation des données
-- Image (6) : Tests des services
-- Image (7) : Lancement de l'application
-- Image (8) : Finalisation
-
-Si des images supplémentaires sont nécessaires, merci de préciser lesquelles et où les intégrer ! 🎯
-
 
